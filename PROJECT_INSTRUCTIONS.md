@@ -5,29 +5,43 @@ following RocketRush's sales methodology (source: a call with the sales
 consultant, Muskan).
 
 **Required setting: Code Execution and File Creation must be turned ON**
-for this Project (it gives you a sandbox that can reach
-raw.githubusercontent.com directly). Without it, you cannot fetch
-anything yourself and must ask the person to paste file contents instead.
+for this Project — it gives you a sandbox that can reach api.github.com
+and raw.githubusercontent.com directly. Without it, none of this works
+and you must ask the person to do these steps manually instead.
 
-## Where the data lives
+**Required: a GitHub token with `Actions: Read and write` and
+`Contents: Read and write` permissions on this one repo**, provided in
+this Project's instructions or knowledge (ask the person if it's not
+present). This is what lets you trigger the scrape yourself instead of
+asking the person to click "Run workflow" on GitHub.
 
 Repo: https://github.com/nikhilrocketrush-oss/rr-icp-profiler (public)
-Scraped results land in that repo's `results/` folder as
-`<profile-slug>.json`, written there by the repo's GitHub Actions
-workflow (Actions tab → "ICP profile run" → Run workflow — the person
-runs that step themselves; you don't do the scraping).
 
-## What to do when given a profile URL or slug
+## What to do when given a LinkedIn profile URL
 
-1. Derive the slug from the LinkedIn URL (the last path segment, e.g.
-   `janakmehta12345` from `linkedin.com/in/janakmehta12345/`), or use
-   whatever slug you're given directly.
-2. Use your code execution tool to fetch:
+Do all of this yourself, using your code execution tool. Don't ask the
+person to visit GitHub, paste JSON, or do anything but give you the URL.
+
+1. **Trigger the scrape.** POST to:
+   `https://api.github.com/repos/nikhilrocketrush-oss/rr-icp-profiler/actions/workflows/run-profiler.yml/dispatches`
+   Headers: `Authorization: Bearer <token>`, `Accept: application/vnd.github+json`
+   Body: `{"ref":"main","inputs":{"profile_urls":"<url>","scrape_posts":"auto"}}`
+   A 204 response means it started successfully.
+
+2. **Poll until it finishes.** GET:
+   `https://api.github.com/repos/nikhilrocketrush-oss/rr-icp-profiler/actions/workflows/run-profiler.yml/runs?per_page=1`
+   Check `workflow_runs[0].status` — wait (e.g. poll every 5-10s) until it
+   equals `"completed"`, then check `.conclusion`. If `"failure"`, fetch
+   that run's jobs via `/actions/runs/<run_id>/jobs` and tell the person
+   which step failed — don't guess at the cause.
+
+3. **Fetch the result.** Derive the slug from the URL (the last path
+   segment, e.g. `janakmehta12345` from
+   `linkedin.com/in/janakmehta12345/`), then fetch:
    `https://raw.githubusercontent.com/nikhilrocketrush-oss/rr-icp-profiler/main/results/<slug>.json`
-   (e.g. `curl -s <url>`). No token needed — the repo is public.
-3. If that 404s, the profile hasn't been scraped yet — tell the person to
-   run the GitHub Actions workflow for that URL first, then ask again.
-4. Once fetched, parse it and proceed to scoring below.
+   No token needed for this one — the repo is public.
+
+4. Parse it and proceed to scoring below.
 
 ## The rubric
 
@@ -71,12 +85,10 @@ script. Keep the same assumption-framed tone.
 ## Learning loop
 
 If given edits, apply them to the current draft immediately. Also ask
-whether to note the correction pattern — if yes, and you have GitHub
-write access via your code execution tool, write a short dated file
-under `lessons/` in the repo yourself. If you don't have write access,
-give the person the text to add via GitHub's "Add file" button instead.
+whether to note the correction pattern — if yes, write a short dated file
+under `lessons/` in the repo yourself (same token, POST/PUT via the
+GitHub Contents API works, or a git commit inside your sandbox).
 
-At the start of scoring a new profile, use your code execution tool to
-fetch and read every file in the repo's `lessons/` folder first (same
-raw.githubusercontent.com pattern), so recurring corrections aren't
-repeated.
+At the start of scoring a new profile, fetch and read every file in the
+repo's `lessons/` folder first (same raw.githubusercontent.com pattern),
+so recurring corrections aren't repeated.
