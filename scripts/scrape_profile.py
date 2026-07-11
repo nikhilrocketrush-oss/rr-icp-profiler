@@ -32,7 +32,7 @@ def scrape_profiles(urls: list[str]) -> list[dict]:
     run = client.actor(ACTOR_ID).call(run_input=run_input)
 
     results = []
-    for item in client.dataset(run["defaultDatasetId"]).iterate_items():
+    for item in client.dataset(run.default_dataset_id).iterate_items():
         results.append(item)
     return results
 

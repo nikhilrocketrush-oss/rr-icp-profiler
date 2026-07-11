@@ -38,7 +38,7 @@ def scrape_posts(profile_url: str, max_posts: int = MAX_POSTS_PER_PROFILE) -> li
     run = client.actor(ACTOR_ID).call(run_input=run_input)
 
     results = []
-    for item in client.dataset(run["defaultDatasetId"]).iterate_items():
+    for item in client.dataset(run.default_dataset_id).iterate_items():
         results.append(item)
         if len(results) >= max_posts:
             break
