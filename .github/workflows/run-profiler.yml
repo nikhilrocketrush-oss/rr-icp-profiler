@@ -1,0 +1,54 @@
+name: ICP profile run
+
+# Click "Run workflow" on the Actions tab of this repo to use this — no
+# terminal or Claude Code needed. Paste profile URLs (one per line) and
+# choose whether to scrape posts.
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile_urls:
+        description: "LinkedIn profile URLs, one per line"
+        required: true
+        type: string
+      scrape_posts:
+        description: "Scrape recent posts too?"
+        required: true
+        type: choice
+        options:
+          - auto
+          - "yes"
+          - "no"
+        default: auto
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run batch
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PROFILE_URLS: ${{ github.event.inputs.profile_urls }}
+          SCRAPE_POSTS: ${{ github.event.inputs.scrape_posts }}
+        run: |
+          python scripts/run_batch.py --scrape-posts "$SCRAPE_POSTS" --urls $PROFILE_URLS
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add results/
+          git diff --cached --quiet || git commit -m "Run results: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push
