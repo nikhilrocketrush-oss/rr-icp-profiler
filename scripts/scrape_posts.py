@@ -1,8 +1,12 @@
 """
 Scrapes a limited set of recent posts (5-7) per profile using the
-harvestapi/linkedin-post-search Apify actor — same actor rr-tracker uses,
-but capped here to conserve credits since this is a one-time gap check,
-not ongoing tracking.
+harvestapi/linkedin-profile-posts Apify actor.
+
+Note: harvestapi/linkedin-post-search (used elsewhere, e.g. rr-tracker) is
+a keyword search actor — it requires a search query and isn't meant for
+"give me this one profile's own recent posts". Its own docs point to
+linkedin-profile-posts for exactly this use case, so that's what this
+script uses instead.
 
 Requires APIFY_TOKEN as an environment variable.
 
@@ -17,7 +21,7 @@ import sys
 import json
 from apify_client import ApifyClient
 
-ACTOR_ID = "harvestapi/linkedin-post-search"
+ACTOR_ID = "harvestapi/linkedin-profile-posts"
 MAX_POSTS_PER_PROFILE = 7
 
 
@@ -28,10 +32,10 @@ def scrape_posts(profile_url: str, max_posts: int = MAX_POSTS_PER_PROFILE) -> li
 
     client = ApifyClient(token)
 
-    # TODO: confirm exact input schema against current Apify docs —
-    # this mirrors the pattern rr-tracker already uses for this actor.
+    # Verified against the actor's live docs (apify.com/harvestapi/
+    # linkedin-profile-posts): targetUrls + maxPosts is the correct input.
     run_input = {
-        "profileUrl": profile_url,
+        "targetUrls": [profile_url],
         "maxPosts": max_posts,
     }
 

@@ -25,9 +25,13 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 RESULTS_DIR = REPO_ROOT / "results"
 RECENCY_THRESHOLD_DAYS = 75  # roughly 2.5 months, per the skip guideline
 
-# TODO: confirm which field the profile-scraper actor actually returns for
-# the most recent post date once the actor schema is verified against real
-# output — this list is a starting guess covering likely field names.
+# Verified against harvestapi/linkedin-profile-scraper's actual sample
+# output: it does NOT include any post-date field (no posts data at all in
+# its response — only profile/experience/education/skills). This list is
+# kept as a fallback in case a future actor version adds one, but for now
+# `find_last_post_date` will always return None, meaning 'auto' always
+# falls through to "scrape" with that reason logged. Use 'yes'/'no' to
+# override manually, or scrape posts separately to get real recency data.
 LAST_POST_DATE_FIELDS = ["lastPostDate", "latestPostDate", "last_post_date", "mostRecentPostDate"]
 
 

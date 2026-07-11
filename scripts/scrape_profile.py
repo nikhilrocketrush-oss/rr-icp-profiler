@@ -25,9 +25,10 @@ def scrape_profiles(urls: list[str]) -> list[dict]:
 
     client = ApifyClient(token)
 
-    # TODO: confirm exact input schema for this actor against current Apify
-    # docs before first real run — field names below are a starting guess.
-    run_input = {"profileUrls": urls}
+    # Verified against the actor's live input schema (apify.com/harvestapi/
+    # linkedin-profile-scraper/input-schema): the field is "urls", not
+    # "profileUrls" — the earlier guess silently returned zero items.
+    run_input = {"urls": urls}
 
     run = client.actor(ACTOR_ID).call(run_input=run_input)
 
