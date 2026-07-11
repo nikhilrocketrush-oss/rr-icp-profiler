@@ -8,6 +8,9 @@ Usage:
     python scrape_profile.py "https://linkedin.com/in/person-a" "https://linkedin.com/in/person-b"
 """
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 import sys
 import json
 from apify_client import ApifyClient

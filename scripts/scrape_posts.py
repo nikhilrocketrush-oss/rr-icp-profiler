@@ -10,6 +10,9 @@ Usage:
     python scrape_posts.py "https://linkedin.com/in/person-a"
 """
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 import sys
 import json
 from apify_client import ApifyClient

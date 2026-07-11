@@ -9,6 +9,9 @@ file is here for when the workflow gets automated later.
 Requires ANTHROPIC_API_KEY as an environment variable if run standalone.
 """
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 import sys
 import json
 from pathlib import Path
