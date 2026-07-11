@@ -28,7 +28,10 @@ def scrape_profiles(urls: list[str]) -> list[dict]:
     # Verified against the actor's live input schema (apify.com/harvestapi/
     # linkedin-profile-scraper/input-schema): the field is "urls", not
     # "profileUrls" — the earlier guess silently returned zero items.
-    run_input = {"urls": urls}
+    # profileScraperMode is pinned to the cheaper no-email tier ($4/1k vs
+    # $10/1k) — left unset, the actor defaults to email search, which this
+    # project doesn't use and which silently costs more per profile.
+    run_input = {"urls": urls, "profileScraperMode": "Profile details no email"}
 
     run = client.actor(ACTOR_ID).call(run_input=run_input)
 
