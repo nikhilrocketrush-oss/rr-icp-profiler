@@ -15,18 +15,17 @@ mostly 1s is a weak fit regardless of seniority.
 5. **Content quality** — substantive and specific, or surface-level and
    vague?
 
-## Problem-statement framing rule
+## Superseded
 
-Never state the gap as an accusation. Always frame it as an assumption the
-prospect can confirm or deny:
+The single "assumption-framed problem statement + DM" step below has
+been replaced by a multi-message, reply-driven sequence — see
+`rubric/messaging-framework.md`. The 5 signals above still feed that
+process (used to spot a "true skip" and to classify which parameter
+applies), but no single problem statement gets generated anymore.
 
-> "Most [role/seniority] I work with who are dealing with [situation] want
-> [X, Y, Z result]. Are you facing something similar?"
+~~## Problem-statement framing rule~~
+~~## Fit gate~~
+(kept below only for history — do not follow; use messaging-framework.md)
 
-## Fit gate
-
-Only generate a problem statement and DM if BOTH are true:
-- the profile matches the target ICP (role, seniority, company type)
-- at least one meaningful gap was found in scoring
-
-Otherwise, mark the profile as skipped and say why.
+Never state a gap as an accusation — that principle still holds for
+every message in the new sequence too.
