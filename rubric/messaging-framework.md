@@ -139,6 +139,25 @@ know content matters; they need help executing consistently.
 
 ---
 
+## No-reply follow-up (all parameters)
+
+If Message 1 is seen but gets no reply: send exactly ONE follow-up, 3-5
+days later. Never repeat the original question, never apologize, never
+sound needy. Close the loop rather than chase it — this reads as
+confident, not desperate, and is what actually gets replies out of people
+who were quietly ignoring the first message.
+
+- Parameter 1: "I'll take this as bad timing rather than no interest,
+  sir — happy to pick it back up whenever it's relevant."
+- Parameter 2: "I'll take this as timing rather than lack of interest —
+  happy to circle back whenever it makes sense for you."
+- Parameter 3: "I'll take this as timing rather than interest — happy to
+  pick this back up whenever it's useful for you."
+
+If there's still no reply after this follow-up, stop. Do not send a
+third message. Treat continued silence as a soft no, not a red signal —
+leave the door open rather than closing it explicitly.
+
 ## Universal rules (apply to every parameter)
 
 - Never pitch immediately.

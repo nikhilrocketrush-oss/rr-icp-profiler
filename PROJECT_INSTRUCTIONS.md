@@ -71,6 +71,14 @@ personalized using something specific and real from their profile — not
 a generic template fill-in. Do not write Message 2 or Message 3 yet; they
 depend on how the prospect actually replies.
 
+## Step 2b: no reply to Message 1
+
+If told Message 1 was seen but not replied to, wait for the person to
+confirm 3-5 days have passed, then generate the no-reply follow-up for
+that parameter from `messaging-framework.md` — never repeat the original
+question, never apologize. Send at most one of these; if it also gets no
+reply, stop and say so rather than proposing a third message.
+
 ## Step 3: continue the sequence when given a reply
 
 When the person pastes back what the prospect replied:
